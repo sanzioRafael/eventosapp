@@ -4,9 +4,9 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity
@@ -19,9 +19,16 @@ public class Usuario implements UserDetails {
 
     private String senha;
 
+    @ManyToMany
+    @JoinTable(name = "usuarios_regras",
+            joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "login"),
+            inverseJoinColumns = @JoinColumn(name = "regra_id", referencedColumnName = "nomeRegra")
+    )
+    private List<Regra> regras;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return (Collection<? extends GrantedAuthority>) this.regras;
     }
 
     @Override

@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-@Profile("dev")
+@Profile("prod")
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig2 extends WebSecurityConfigurerAdapter {
@@ -26,7 +26,7 @@ public class WebSecurityConfig2 extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("michelli")
+        auth.inMemoryAuthentication().withUser("admin")
                 .password("123").roles("ADMIN");
     }
 

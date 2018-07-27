@@ -3,12 +3,16 @@ package com.eventoapp.eventoapp.security;
 import com.eventoapp.eventoapp.model.Usuario;
 import com.eventoapp.eventoapp.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+
 @Repository
+@Transactional
 public class ImplementsUserDetailsService implements UserDetailsService {
 
     @Autowired
@@ -22,7 +26,7 @@ public class ImplementsUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Usuário não encontrado!");
         }
 
-        return usuario;
+        return new User(usuario.getUsername(), usuario.getPassword(), true, true, true, true, usuario.getAuthorities());
     }
 
 }
